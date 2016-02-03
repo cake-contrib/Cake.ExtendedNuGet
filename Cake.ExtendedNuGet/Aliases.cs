@@ -12,6 +12,7 @@ namespace Cake.ExtendedNuGet
     /// Extended NuGet Aliases
     /// </summary>
     [CakeAliasCategory("NuGet")]
+    [CakeNamespaceImport("NuGet")]
     public static class ExtendedNuGetAliases
     {
         const string DefaultNuGetSource = "https://www.nuget.org/api/v2";
