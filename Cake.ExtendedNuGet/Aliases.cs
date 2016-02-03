@@ -12,7 +12,6 @@ namespace Cake.ExtendedNuGet
     /// Extended NuGet Aliases
     /// </summary>
     [CakeAliasCategory("NuGet")]
-    [CakeNamespaceImport("NuGet")]
     public static class ExtendedNuGetAliases
     {
         const string DefaultNuGetSource = "https://www.nuget.org/api/v2";
@@ -24,6 +23,7 @@ namespace Cake.ExtendedNuGet
         /// <param name="context">The context.</param>
         /// <param name="file">The .nupkg file to read.</param>
         [CakeMethodAlias]
+        [CakeNamespaceImport("NuGet")]
         public static string GetNuGetPackageId (this ICakeContext context, FilePath file)
         {
             var f = file.MakeAbsolute (context.Environment).FullPath;
@@ -40,6 +40,7 @@ namespace Cake.ExtendedNuGet
         /// <param name="context">The context.</param>
         /// <param name="file">The .nupkg file to read.</param>
         [CakeMethodAlias]
+        [CakeNamespaceImport("NuGet")]
         public static SemanticVersion GetNuGetPackageVersion (this ICakeContext context, FilePath file)
         {
             var f = file.MakeAbsolute (context.Environment).FullPath;
@@ -57,6 +58,7 @@ namespace Cake.ExtendedNuGet
         /// <param name="file">The .nupkg file.</param>
         /// <param name="nugetSource">The NuGet package source.</param>
         [CakeMethodAlias]
+        [CakeNamespaceImport("NuGet")]
         public static bool IsNuGetPublished (this ICakeContext context, FilePath file, string nugetSource = DefaultNuGetSource)
         {
             var f = file.MakeAbsolute (context.Environment).FullPath;
@@ -75,6 +77,7 @@ namespace Cake.ExtendedNuGet
         /// <param name="version">The NuGet package Version.</param>
         /// <param name="nugetSource">The NuGet package source.</param>
         [CakeMethodAlias]
+        [CakeNamespaceImport("NuGet")]
         public static bool IsNuGetPublished (this ICakeContext context, string packageId, string version, string nugetSource = DefaultNuGetSource)
         {
             var v = SemanticVersion.Parse (version);
@@ -91,6 +94,7 @@ namespace Cake.ExtendedNuGet
         /// <param name="version">The NuGet package Version.</param>
         /// <param name="nugetSource">The NuGet package source.</param>
         [CakeMethodAlias]
+        [CakeNamespaceImport("NuGet")]
         public static bool IsNuGetPublished (this ICakeContext context, string packageId, SemanticVersion version, string nugetSource = DefaultNuGetSource)
         {
             var repo = PackageRepositoryFactory.Default.CreateRepository (nugetSource);
