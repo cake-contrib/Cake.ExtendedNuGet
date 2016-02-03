@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.ExtendedNuGet", "Cake.ExtendedNuGet\Cake.ExtendedNuGet.csproj", "{A070896F-CEC4-4FF0-B354-7EE1686359BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.ExtendedNuGet.Tests", "Cake.ExtendedNuGet.Tests\Cake.ExtendedNuGet.Tests.csproj", "{4325702C-1F2F-4799-AE8A-9F5F1120674C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4325702C-1F2F-4799-AE8A-9F5F1120674C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4325702C-1F2F-4799-AE8A-9F5F1120674C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4325702C-1F2F-4799-AE8A-9F5F1120674C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4325702C-1F2F-4799-AE8A-9F5F1120674C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A070896F-CEC4-4FF0-B354-7EE1686359BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A070896F-CEC4-4FF0-B354-7EE1686359BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A070896F-CEC4-4FF0-B354-7EE1686359BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A070896F-CEC4-4FF0-B354-7EE1686359BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
