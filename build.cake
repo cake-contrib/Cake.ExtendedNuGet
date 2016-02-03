@@ -1,7 +1,9 @@
 var sln = "./Cake.ExtendedNuGet.sln";
 var nuspec = "./Cake.ExtendedNuGet.nuspec";
 
-var target = Argument ("target", "lib");
+var target = Argument ("target", "Default");
+
+Task ("Default").IsDependentOn ("lib");
 
 Task ("lib").Does (() => 
 {
