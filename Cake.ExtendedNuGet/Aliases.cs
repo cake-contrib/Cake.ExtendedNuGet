@@ -5,6 +5,10 @@ using Cake.Core.IO;
 using System.Collections.Generic;
 using System.Linq;
 using NuGet;
+using Cake.Common.Tools.NuGet.Push;
+using Cake.Common.Tools.NuGet;
+using Cake.Common.Diagnostics;
+using Cake.Common.IO;
 
 namespace Cake.ExtendedNuGet
 {
@@ -105,6 +109,65 @@ namespace Cake.ExtendedNuGet
             var exists = packages.Any (p => p.Version == version);
 
             return exists;
+        }
+
+
+        /// <summary>
+        /// Looks for and attempts to publish NuGet packages matching the globbing patterns
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="nugetSource">The NuGet Server.</param>
+        /// <param name="apiKey">The NuGet API key.</param>
+        /// <param name="settings">The settings.</param>
+        /// <param name="nupkgFileGlobbingPatterns">The file globbing patterns to find NuGet packages with.</param>
+        [CakeMethodAlias]
+        public static void PublishNuGets (this ICakeContext context, string nugetSource, string apiKey, PublishNuGetsSettings settings, params string[] nupkgFileGlobbingPatterns)
+        {
+            foreach (var pattern in nupkgFileGlobbingPatterns)
+            {
+                var files = context.GetFiles(pattern);
+                if (files == null || !files.Any())
+                    continue;
+
+                foreach (var file in files)
+                {
+                    if (!settings.ForcePush && IsNuGetPublished(context, file, nugetSource))
+                    {
+                        context.Information("Already published: {0}", file);
+                        continue;
+                    }
+
+                    context.Information("Attempting to publish {0}", file);
+
+                    int attempts = 0;
+                    bool success = false;
+
+                    while (attempts < settings.MaxAttempts)
+                    {
+                        attempts++;
+
+                        try {
+                            context.NuGetPush (file, new NuGetPushSettings {
+                                Source = nugetSource,
+                                ApiKey = apiKey
+                            });
+                            success = true;
+                            break;
+                        } catch {
+                            context.Warning("Attempt #{0} of {1} failed...", attempts, settings.MaxAttempts);
+                        }
+                    }
+
+                    if (!success)
+                    {
+                        var msg = "Maximum # of attempts ({0}) to publish exceeded";
+                        context.Error(msg, settings.MaxAttempts);
+                        throw new Exception(string.Format (msg, settings.MaxAttempts));
+                    }
+
+                    context.Information("Published Package successfully: {0}", file);
+                }
+            }
         }
     }
 }
