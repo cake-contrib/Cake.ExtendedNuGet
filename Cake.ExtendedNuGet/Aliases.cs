@@ -131,7 +131,8 @@ namespace Cake.ExtendedNuGet
 
                 foreach (var file in files)
                 {
-                    if (!settings.ForcePush && IsNuGetPublished(context, file, nugetSource))
+                    if (!settings.ForcePush 
+                        && !string.IsNullOrEmpty (nugetSource) ? IsNuGetPublished (context, file, nugetSource) : IsNuGetPublished (context, file))
                     {
                         context.Information("Already published: {0}", file);
                         continue;
@@ -147,10 +148,14 @@ namespace Cake.ExtendedNuGet
                         attempts++;
 
                         try {
-                            context.NuGetPush (file, new NuGetPushSettings {
-                                Source = nugetSource,
+                            var ns = new NuGetPushSettings {
                                 ApiKey = apiKey
-                            });
+                            };
+
+                            if (!string.IsNullOrEmpty (nugetSource))
+                                ns.Source = nugetSource;
+                            
+                            context.NuGetPush (file, ns);
                             success = true;
                             break;
                         } catch {
