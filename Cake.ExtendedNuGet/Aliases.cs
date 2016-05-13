@@ -112,6 +112,7 @@ namespace Cake.ExtendedNuGet
         }
 
 
+
         /// <summary>
         /// Looks for and attempts to publish NuGet packages matching the globbing patterns
         /// </summary>
@@ -121,7 +122,22 @@ namespace Cake.ExtendedNuGet
         /// <param name="settings">The settings.</param>
         /// <param name="nupkgFileGlobbingPatterns">The file globbing patterns to find NuGet packages with.</param>
         [CakeMethodAlias]
-        public static void PublishNuGets (this ICakeContext context, string nugetSource, string apiKey, PublishNuGetsSettings settings, params string[] nupkgFileGlobbingPatterns)
+        public static void PublishNuGets (this ICakeContext context, string nugetSource, string apiKey, PublishNuGetsSettings settings, params string [] nupkgFileGlobbingPatterns)
+        {
+            PublishNuGets (context, nugetSource, nugetSource, apiKey, settings, nupkgFileGlobbingPatterns);
+        }
+
+        /// <summary>
+        /// Looks for and attempts to publish NuGet packages matching the globbing patterns
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="readSource">The NuGet Server to check for existing packages on.</param>
+        /// <param name="publishSource">The NuGet Server to push packages to.</param>
+        /// <param name="apiKey">The NuGet API key.</param>
+        /// <param name="settings">The settings.</param>
+        /// <param name="nupkgFileGlobbingPatterns">The file globbing patterns to find NuGet packages with.</param>
+        [CakeMethodAlias]
+        public static void PublishNuGets (this ICakeContext context, string readSource, string publishSource, string apiKey, PublishNuGetsSettings settings, params string[] nupkgFileGlobbingPatterns)
         {
             foreach (var pattern in nupkgFileGlobbingPatterns)
             {
@@ -132,7 +148,7 @@ namespace Cake.ExtendedNuGet
                 foreach (var file in files)
                 {
                     if (!settings.ForcePush 
-                        && !string.IsNullOrEmpty (nugetSource) ? IsNuGetPublished (context, file, nugetSource) : IsNuGetPublished (context, file))
+                        && !string.IsNullOrEmpty (readSource) ? IsNuGetPublished (context, file, readSource) : IsNuGetPublished (context, file))
                     {
                         context.Information("Already published: {0}", file);
                         continue;
@@ -152,8 +168,8 @@ namespace Cake.ExtendedNuGet
                                 ApiKey = apiKey
                             };
 
-                            if (!string.IsNullOrEmpty (nugetSource))
-                                ns.Source = nugetSource;
+                            if (!string.IsNullOrEmpty (publishSource))
+                                ns.Source = publishSource;
                             
                             context.NuGetPush (file, ns);
                             success = true;
