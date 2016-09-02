@@ -5,10 +5,10 @@ using Cake.Core.IO;
 using Cake.ExtendedNuGet;
 using NuGet;
 
-namespace Cake.FileHelpers.Tests
+namespace Cake.ExtendedNuGet.Tests
 {
     [TestFixture]
-    public class FileHelperTests
+    public class ExtendedNuGetTests
     {
         FakeCakeContext context;
 
