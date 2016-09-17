@@ -81,13 +81,22 @@ namespace Cake.ExtendedNuGet.Tests
         }
 
         [Test]
-        public void NuGetPackageVersionFromFile ()
+        public void GetAllPackageReferencesForThisProject()
         {
-            var f = new FilePath ("../../TestData/xamarin.android.support.v4.23.1.1.nupkg");
+            var d = new DirectoryPath("../../");
 
-            var packageVersion = context.CakeContext.GetNuGetPackageVersion (f);
+            var packageReferences = context.CakeContext.GetPackageReferences(d);
 
-            Assert.AreEqual (new SemanticVersion ("23.1.1"), packageVersion);
+            Assert.IsNotEmpty(packageReferences);
+        }
+
+        [Test]
+        public void GetPackageReferenceByIdForThisProject()
+        {
+            var d = new DirectoryPath("../../");
+
+            var cakeCorePackageReferences = context.CakeContext.GetPackageReference(d, "Cake.Core");
+            Assert.IsNotNullOrEmpty(cakeCorePackageReferences.Version.ToString());
         }
     }
 }

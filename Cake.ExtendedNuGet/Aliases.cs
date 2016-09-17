@@ -190,5 +190,68 @@ namespace Cake.ExtendedNuGet
                 }
             }
         }
+
+        /// <summary>
+        /// NuGet project dependencies.
+        /// </summary>
+        /// <param name="context">
+        /// The <c>context</c>.
+        /// </param>
+        /// <param name="path">
+        /// A relative <see cref="DirectoryPath"/> where packages.config resides.
+        /// </param>
+        /// <returns>
+        /// A <see cref="IEnumerable{PackageReference}"/>.
+        /// </returns>
+        [CakeMethodAlias]
+        public static IEnumerable<PackageReference> GetPackageReferences(this ICakeContext context, DirectoryPath path)
+        {
+            if (!path.IsRelative)
+            {
+                throw new CakeException("DirectoryPath must be relative!");
+            }
+
+            var packagePath = path.CombineWithFilePath(new FilePath("packages.config"));
+            if (!System.IO.File.Exists(packagePath.FullPath))
+            {
+                throw new CakeException(string.Format("Could not find a packages.config file in '{0}'", path.FullPath));
+            }
+
+            var file = new PackageReferenceFile(packagePath.FullPath);
+            return file.GetPackageReferences();
+        }
+
+        /// <summary>
+        /// Get a NuGet project dependency by <paramref name="packageId"/>.
+        /// </summary>
+        /// <param name="context">
+        /// This <see cref="ICakeContext"/>.
+        /// </param>
+        /// <param name="path">
+        /// A relative <see cref="DirectoryPath"/> where packages.config resides.
+        /// </param>
+        /// <param name="packageId">
+        /// The package Name.
+        /// </param>
+        /// <returns>
+        /// A <see cref="IEnumerable{PackageReference}"/>.
+        /// </returns>
+        [CakeMethodAlias]
+        public static PackageReference GetPackageReference(this ICakeContext context, DirectoryPath path, string packageId)
+        {
+            if (!path.IsRelative)
+            {
+                throw new CakeException("DirectoryPath must be relative!");
+            }
+
+            var packagePath = path.CombineWithFilePath(new FilePath("packages.config"));
+            if (!System.IO.File.Exists(packagePath.FullPath))
+            {
+                throw new CakeException(string.Format("Could not find a packages.config file in '{0}'", path.FullPath));
+            }
+
+            var file = new PackageReferenceFile(packagePath.FullPath);
+            return file.GetPackageReferences().FirstOrDefault(x => x.Id.Equals(packageId, StringComparison.OrdinalIgnoreCase));
+        }
     }
 }
