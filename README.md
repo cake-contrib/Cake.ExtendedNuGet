@@ -12,7 +12,7 @@ You can easily reference Cake.ExtendedNuGet directly in your build script via a 
 
 Please visit the Cake Documentation for a list of available aliases:
 
-http://cakebuild.net/dsl/file-helpers
+http://cakebuild.net/dsl/nuget
 
 
 ## Apache License 2.0
