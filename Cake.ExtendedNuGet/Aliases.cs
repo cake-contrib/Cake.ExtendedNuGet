@@ -30,9 +30,9 @@ namespace Cake.ExtendedNuGet
         [CakeNamespaceImport("NuGet")]
         public static string GetNuGetPackageId (this ICakeContext context, FilePath file)
         {
-            var f = file.MakeAbsolute (context.Environment).FullPath;
+            var f = file.MakeAbsolute(context.Environment).FullPath;
 
-            var p = new ZipPackage (f);
+            var p = new ZipPackage(f);
 
             return p.Id;
         }
@@ -47,9 +47,9 @@ namespace Cake.ExtendedNuGet
         [CakeNamespaceImport("NuGet")]
         public static SemanticVersion GetNuGetPackageVersion (this ICakeContext context, FilePath file)
         {
-            var f = file.MakeAbsolute (context.Environment).FullPath;
+            var f = file.MakeAbsolute(context.Environment).FullPath;
 
-            var p = new ZipPackage (f);
+            var p = new ZipPackage(f);
 
             return p.Version;
         }
@@ -65,11 +65,11 @@ namespace Cake.ExtendedNuGet
         [CakeNamespaceImport("NuGet")]
         public static bool IsNuGetPublished (this ICakeContext context, FilePath file, string nugetSource = DefaultNuGetSource)
         {
-            var f = file.MakeAbsolute (context.Environment).FullPath;
+            var f = file.MakeAbsolute(context.Environment).FullPath;
 
-            var pkg = new ZipPackage (f);
+            var pkg = new ZipPackage(f);
 
-            return IsNuGetPublished (context, pkg.Id, pkg.Version, nugetSource);
+            return IsNuGetPublished(context, pkg.Id, pkg.Version, nugetSource);
         }
 
         /// <summary>
@@ -84,9 +84,9 @@ namespace Cake.ExtendedNuGet
         [CakeNamespaceImport("NuGet")]
         public static bool IsNuGetPublished (this ICakeContext context, string packageId, string version, string nugetSource = DefaultNuGetSource)
         {
-            var v = SemanticVersion.Parse (version);
+            var v = SemanticVersion.Parse(version);
 
-            return IsNuGetPublished (context, packageId, v, nugetSource);
+            return IsNuGetPublished(context, packageId, v, nugetSource);
         }
 
         /// <summary>
@@ -204,7 +204,8 @@ namespace Cake.ExtendedNuGet
         /// A <see cref="IEnumerable{PackageReference}"/>.
         /// </returns>
         [CakeMethodAlias]
-        public static IEnumerable<PackageReference> GetPackageReferences(this ICakeContext context, DirectoryPath path)
+        [CakeNamespaceImport("NuGet")]
+        public static IEnumerable<PackageReferenceEntity> GetPackageReferences(this ICakeContext context, DirectoryPath path)
         {
             if (!path.IsRelative)
             {
@@ -218,7 +219,7 @@ namespace Cake.ExtendedNuGet
             }
 
             var file = new PackageReferenceFile(packagePath.FullPath);
-            return file.GetPackageReferences();
+            return file.GetPackageReferences().Select(x => new PackageReferenceEntity(x));
         }
 
         /// <summary>
@@ -237,7 +238,8 @@ namespace Cake.ExtendedNuGet
         /// A <see cref="IEnumerable{PackageReference}"/>.
         /// </returns>
         [CakeMethodAlias]
-        public static PackageReference GetPackageReference(this ICakeContext context, DirectoryPath path, string packageId)
+        [CakeNamespaceImport("NuGet")]
+        public static PackageReferenceEntity GetPackageReference(this ICakeContext context, DirectoryPath path, string packageId)
         {
             if (!path.IsRelative)
             {
@@ -251,7 +253,7 @@ namespace Cake.ExtendedNuGet
             }
 
             var file = new PackageReferenceFile(packagePath.FullPath);
-            return file.GetPackageReferences().FirstOrDefault(x => x.Id.Equals(packageId, StringComparison.OrdinalIgnoreCase));
+            return file.GetPackageReferences().Select(x => new PackageReferenceEntity(x)).FirstOrDefault(x => x.Id.Equals(packageId, StringComparison.OrdinalIgnoreCase));
         }
     }
 }
