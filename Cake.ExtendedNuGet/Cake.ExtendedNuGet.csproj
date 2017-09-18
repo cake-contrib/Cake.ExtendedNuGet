@@ -1,59 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A070896F-CEC4-4FF0-B354-7EE1686359BF}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Cake.ExtendedNuGet</RootNamespace>
-    <AssemblyName>Cake.ExtendedNuGet</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
+    <TargetFrameworks>netstandard1.6;net46</TargetFrameworks>
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.1</NetStandardImplicitPackageVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <DocumentationFile>bin\Debug\Cake.ExtendedNuGet.xml</DocumentationFile>
+
+  <ItemGroup>
+    <PackageReference Include="Cake.Core" Version="0.22.0" />
+    <PackageReference Include="Cake.Common" Version="0.22.0" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <PackageId>Cake.ExtendedNuGet</PackageId>
+    <Title>Cake.ExtendedNuGet</Title>
+    <Summary>Cake build aliases for NuGet package inspection.</Summary>
+    <Description>Cake Build addon to provide Aliases for NuGet package inspection.</Description>
+    <PackageTags>Cake Script Build NuGet</PackageTags>
+    <Authors>Redth</Authors>
+    <Owners>Redth</Owners>
+    <PackageProjectUrl>https://github.com/Redth/Cake.ExtendedNuGet</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/Redth/Cake.ExtendedNuGet/master/icon.png</PackageIconUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/Redth/Cake.ExtendedNuGet/master/LICENSE.md</PackageLicenseUrl>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <DocumentationFile>bin\Release\Cake.ExtendedNuGet.xml</DocumentationFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Cake.Common, Version=0.22.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Cake.Common.0.22.0\lib\net46\Cake.Common.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Cake.Core, Version=0.22.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Cake.Core.0.22.0\lib\net46\Cake.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="Microsoft.Web.XmlTransform">
-      <HintPath>..\packages\Microsoft.Web.Xdt.2.1.1\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
-    </Reference>
-    <Reference Include="NuGet.Core">
-      <HintPath>..\packages\NuGet.Core.2.14.0\lib\net40-Client\NuGet.Core.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Namespaces.cs" />
-    <Compile Include="Aliases.cs" />
-    <Compile Include="PublishNuGetsSettings.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
 </Project>
