@@ -18,7 +18,7 @@
    </metadata>
 
    <files>
-      <file src="./Cake.ExtendedNuGet/bin/Release/Cake.ExtendedNuGet.dll" target="lib/net45" />
-      <file src="./Cake.ExtendedNuGet/bin/Release/Cake.ExtendedNuGet.xml" target="lib/net45" />      
+      <file src="./Cake.ExtendedNuGet/bin/Release/Cake.ExtendedNuGet.dll" target="lib/net46" />
+      <file src="./Cake.ExtendedNuGet/bin/Release/Cake.ExtendedNuGet.xml" target="lib/net46" />      
    </files>
 </package>
