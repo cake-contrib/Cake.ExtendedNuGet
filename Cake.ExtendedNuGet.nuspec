@@ -15,6 +15,11 @@
       <copyright>Copyright (c) Redth 2015-2016</copyright>
       <releaseNotes>Initial Release</releaseNotes>
       <tags>Cake Script Build</tags>
+
+      <dependencies>
+         <dependency id="Nuget.Core" version="2.14.0" />
+      </dependencies>
+
    </metadata>
 
    <files>
