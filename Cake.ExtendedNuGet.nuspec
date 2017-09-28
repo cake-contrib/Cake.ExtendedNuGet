@@ -10,9 +10,9 @@
       <summary>Cake build aliases for NuGet package inspection.</summary>
       <licenseUrl>https://raw.githubusercontent.com/Redth/Cake.ExtendedNuGet/master/LICENSE.md</licenseUrl>
       <projectUrl>https://github.com/Redth/Cake.ExtendedNuGet</projectUrl>
-      <iconUrl>https://raw.githubusercontent.com/Redth/Cake.ExtendedNuGet/master/icon.png</iconUrl>
+      <iconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</iconUrl>
       <requireLicenseAcceptance>false</requireLicenseAcceptance>
-      <copyright>Copyright (c) Redth 2015-2016</copyright>
+      <copyright>Copyright (c) Redth 2015 - Present</copyright>
       <releaseNotes>Initial Release</releaseNotes>
       <tags>Cake Script Build</tags>
    </metadata>
