@@ -14,21 +14,22 @@ namespace Cake.Xamarin.Tests.Fakes
 
         public FakeCakeContext ()
         {
-            testsDir = Environment.CurrentDirectory = System.IO.Path.GetDirectoryName(typeof(FakeCakeContext).Assembly.Location);
-            
+            testsDir = new DirectoryPath (
+                System.IO.Path.GetFullPath (AppDomain.CurrentDomain.BaseDirectory));
+
             var fileSystem = new FileSystem ();
-			var environment = new Cake.Testing.FakeEnvironment(PlatformFamily.Windows);
+            var environment = new Cake.Testing.FakeEnvironment(PlatformFamily.Windows);
             var globber = new Globber (fileSystem, environment);
             log = new FakeLog ();
             var args = new FakeCakeArguments ();
             var processRunner = new ProcessRunner (environment, log);
             var registry = new WindowsRegistry ();
-			var toolRepo = new ToolRepository(environment);
-			var config = new Core.Configuration.CakeConfigurationProvider(fileSystem, environment).CreateConfiguration(testsDir, new Dictionary<string, string>());
-			var toolResolutionStrategy = new ToolResolutionStrategy(fileSystem, environment, globber, config);
-			var toolLocator = new ToolLocator(environment, toolRepo, toolResolutionStrategy);
-			context = new CakeContext(fileSystem, environment, globber, log, args, processRunner, registry, toolLocator);
-			context.Environment.WorkingDirectory = testsDir;
+            var toolRepo = new ToolRepository(environment);
+            var config = new Core.Configuration.CakeConfigurationProvider(fileSystem, environment).CreateConfiguration(testsDir, new Dictionary<string, string>());
+            var toolResolutionStrategy = new ToolResolutionStrategy(fileSystem, environment, globber, config);
+            var toolLocator = new ToolLocator(environment, toolRepo, toolResolutionStrategy);
+            context = new CakeContext(fileSystem, environment, globber, log, args, processRunner, registry, toolLocator);
+            context.Environment.WorkingDirectory = testsDir;
         }
 
         public DirectoryPath WorkingDirectory {
