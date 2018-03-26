@@ -1,66 +1,35 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4325702C-1F2F-4799-AE8A-9F5F1120674C}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Cake.ExtendedNuGet.Tests</RootNamespace>
-    <AssemblyName>Cake.ExtendedNuGet.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Cake.Core, Version=0.26.1.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Cake.Core.0.26.1\lib\net46\Cake.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Cake.Testing, Version=0.26.1.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Cake.Testing.0.26.1\lib\net46\Cake.Testing.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.XmlTransform">
-      <HintPath>..\packages\Microsoft.Web.Xdt.2.1.1\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
-    </Reference>
-    <Reference Include="NuGet.Core">
-      <HintPath>..\packages\NuGet.Core.2.14.0\lib\net40-Client\NuGet.Core.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Cake.Common" Version="0.26.1" />
+    <PackageReference Include="Cake.Core" Version="0.26.1" />
+    <PackageReference Include="Cake.Testing" Version="0.26.1" />
+    <PackageReference Include="NuGet.Core" Version="2.14.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.1" />
+    <PackageReference Include="xunit.runner.console" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cake.ExtendedNuGet\Cake.ExtendedNuGet.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="TestData\xamarin.android.support.v4.23.1.1.nupkg" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fakes\FakeCakeArguments.cs" />
-    <Compile Include="Fakes\FakeCakeContext.cs" />
-    <Compile Include="Fakes\FakeLog.cs" />
-    <Compile Include="ExtendedNuGetTests.cs" />
+    <None Update="TestData\xamarin.android.support.v4.23.1.1.nupkg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\Cake.ExtendedNuGet\Cake.ExtendedNuGet.csproj">
-      <Project>{A070896F-CEC4-4FF0-B354-7EE1686359BF}</Project>
-      <Name>Cake.ExtendedNuGet</Name>
-    </ProjectReference>
+    <Content Include="TestData\xamarin.android.support.v4.23.1.1.nupkg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

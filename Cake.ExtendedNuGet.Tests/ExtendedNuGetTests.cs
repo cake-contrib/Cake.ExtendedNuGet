@@ -1,30 +1,28 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using Cake.Xamarin.Tests.Fakes;
 using Cake.Core.IO;
 using Cake.ExtendedNuGet;
 using NuGet;
+using Xunit;
 
 namespace Cake.ExtendedNuGet.Tests
 {
-    [TestFixture]
-    public class ExtendedNuGetTests
+    public class ExtendedNuGetTests : IDisposable
     {
         FakeCakeContext context;
 
-        [SetUp]
-        public void Setup ()
+        public ExtendedNuGetTests ()
         {
             context = new FakeCakeContext ();
         }
 
-        [TearDown]
-        public void Teardown ()
+
+        public void Dispose ()
         {
             context.DumpLogs ();
         }
 
-        [Test]
+        [Fact]
         public void IsNuGetPublishedShouldBeTrue ()
         {
             var p = context.CakeContext.IsNuGetPublished (
@@ -32,10 +30,10 @@ namespace Cake.ExtendedNuGet.Tests
                 "23.1.1.0"
             );
 
-            Assert.IsTrue (p);
+            Assert.True (p);
         }
 
-        [Test]
+        [Fact]
         public void IsNuGetPublishedShouldBeFalse ()
         {
             var p = context.CakeContext.IsNuGetPublished (
@@ -43,10 +41,10 @@ namespace Cake.ExtendedNuGet.Tests
                 "999.9.9.0"
             );
 
-            Assert.IsFalse (p);
+            Assert.False (p);
         }
 
-        [Test]
+        [Fact]
         public void IsNuGetPublishedAltSrcShouldBeTrue ()
         {
             var p = context.CakeContext.IsNuGetPublished (
@@ -55,10 +53,10 @@ namespace Cake.ExtendedNuGet.Tests
                 "https://www.myget.org/F/redth/api/v2"
             );
 
-            Assert.IsTrue (p);
+            Assert.True (p);
         }
 
-        [Test]
+        [Fact]
         public void IsNuGetPublishedAltSrcShouldBeFalse ()
         {
             var p = context.CakeContext.IsNuGetPublished (
@@ -67,36 +65,37 @@ namespace Cake.ExtendedNuGet.Tests
                 "https://www.myget.org/F/redth/api/v2"
             );
 
-            Assert.IsFalse (p);
+            Assert.False (p);
         }
 
-        [Test]
+        [Fact]
         public void NuGetPackageIdFromFile ()
         {
             var f = new FilePath ("../../TestData/xamarin.android.support.v4.23.1.1.nupkg");
 
             var packageId = context.CakeContext.GetNuGetPackageId (f);
 
-            Assert.AreEqual ("Xamarin.Android.Support.v4", packageId);
+            Assert.Equal ("Xamarin.Android.Support.v4", packageId);
         }
 
-        [Test]
+        [Fact]
         public void GetAllPackageReferencesForThisProject()
         {
             var d = new DirectoryPath("../../");
 
             var packageReferences = context.CakeContext.GetPackageReferences(d);
 
-            Assert.IsNotEmpty(packageReferences);
+            Assert.NotEmpty(packageReferences);
         }
 
-        [Test]
+        [Fact]
         public void GetPackageReferenceByIdForThisProject()
         {
             var d = new DirectoryPath("../../");
 
             var cakeCorePackageReferences = context.CakeContext.GetPackageReference(d, "Cake.Core");
-            Assert.IsNotNullOrEmpty(cakeCorePackageReferences.Version.ToString());
+
+            Assert.False(string.IsNullOrEmpty(cakeCorePackageReferences.Version.ToString()));
         }
     }
 }
