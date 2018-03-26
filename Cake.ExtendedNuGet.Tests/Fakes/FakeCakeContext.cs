@@ -14,8 +14,7 @@ namespace Cake.Xamarin.Tests.Fakes
 
         public FakeCakeContext ()
         {
-            testsDir = new DirectoryPath (
-                System.IO.Path.GetFullPath (AppDomain.CurrentDomain.BaseDirectory));
+            testsDir = Environment.CurrentDirectory = System.IO.Path.GetDirectoryName(typeof(FakeCakeContext).Assembly.Location);
             
             var fileSystem = new FileSystem ();
 			var environment = new Cake.Testing.FakeEnvironment(PlatformFamily.Windows);

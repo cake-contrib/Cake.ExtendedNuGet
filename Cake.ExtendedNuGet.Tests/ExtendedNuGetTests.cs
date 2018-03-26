@@ -71,7 +71,7 @@ namespace Cake.ExtendedNuGet.Tests
         [Fact]
         public void NuGetPackageIdFromFile ()
         {
-            var f = new FilePath ("../../TestData/xamarin.android.support.v4.23.1.1.nupkg");
+            var f = new FilePath ("./TestData/xamarin.android.support.v4.23.1.1.nupkg");
 
             var packageId = context.CakeContext.GetNuGetPackageId (f);
 
@@ -81,7 +81,7 @@ namespace Cake.ExtendedNuGet.Tests
         [Fact]
         public void GetAllPackageReferencesForThisProject()
         {
-            var d = new DirectoryPath("../../");
+            var d = new DirectoryPath("./TestData/");
 
             var packageReferences = context.CakeContext.GetPackageReferences(d);
 
@@ -91,7 +91,7 @@ namespace Cake.ExtendedNuGet.Tests
         [Fact]
         public void GetPackageReferenceByIdForThisProject()
         {
-            var d = new DirectoryPath("../../");
+            var d = new DirectoryPath("./TestData/");
 
             var cakeCorePackageReferences = context.CakeContext.GetPackageReference(d, "Cake.Core");
 
