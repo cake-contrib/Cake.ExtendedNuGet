@@ -30,13 +30,11 @@
     <DocumentationFile>bin\Release\Cake.ExtendedNuGet.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Cake.Common, Version=0.22.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Cake.Common.0.22.0\lib\net46\Cake.Common.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Cake.Common, Version=0.26.1.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Cake.Common.0.26.1\lib\net46\Cake.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Cake.Core, Version=0.22.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Cake.Core.0.22.0\lib\net46\Cake.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Cake.Core, Version=0.26.1.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Cake.Core.0.26.1\lib\net46\Cake.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.Web.XmlTransform">
