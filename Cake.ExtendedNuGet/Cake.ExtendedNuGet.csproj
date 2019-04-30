@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net46</TargetFrameworks>
@@ -14,7 +14,7 @@
     <Authors>Redth</Authors>
     <Owners>Redth</Owners>
     <PackageProjectUrl>https://github.com/redth/Cake.ExtendedNuGet</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/Redth/Cake.ExtendedNuGet/master/icon.png</PackageIconUrl>
+    <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</PackageIconUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/Redth/Cake.ExtendedNuGet/master/LICENSE.md</PackageLicenseUrl>
   </PropertyGroup>
 
