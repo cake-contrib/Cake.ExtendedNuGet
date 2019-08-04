@@ -1,5 +1,5 @@
 ﻿using System;
-using Cake.Xamarin.Tests.Fakes;
+using Cake.ExtendedNuGet.Tests.Fakes;
 using Cake.Core.IO;
 using Cake.ExtendedNuGet;
 using NuGet;
@@ -48,8 +48,8 @@ namespace Cake.ExtendedNuGet.Tests
         public void IsNuGetPublishedAltSrcShouldBeTrue ()
         {
             var p = context.CakeContext.IsNuGetPublished (
-                "ZXing.Net.Mobile",
-                "1.5.0",
+                "Cake.MsCognitiveServices.ComputerVision",
+                "1.0.1",
                 "https://www.myget.org/F/redth/api/v2"
             );
 
@@ -95,7 +95,7 @@ namespace Cake.ExtendedNuGet.Tests
 
             var cakeCorePackageReferences = context.CakeContext.GetPackageReference(d, "Cake.Core");
 
-            Assert.False(string.IsNullOrEmpty(cakeCorePackageReferences.Version.ToString()));
+            Assert.False(string.IsNullOrEmpty(cakeCorePackageReferences.PackageIdentity.Version.ToString()));
         }
     }
 }

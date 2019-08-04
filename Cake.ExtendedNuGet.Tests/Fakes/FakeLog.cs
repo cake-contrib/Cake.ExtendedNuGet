@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Cake.Core.Diagnostics;
 
-namespace Cake.Xamarin.Tests.Fakes
+namespace Cake.ExtendedNuGet.Tests.Fakes
 {
     /// <summary>
     /// Implementation of a <see cref="ICakeLog"/> that saves all messages written to it.

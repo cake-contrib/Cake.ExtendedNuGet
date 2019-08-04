@@ -4,11 +4,20 @@ using Cake.Core;
 using Cake.Core.IO;
 using System.Collections.Generic;
 using System.Linq;
-using NuGet;
+
 using Cake.Common.Tools.NuGet.Push;
 using Cake.Common.Tools.NuGet;
 using Cake.Common.Diagnostics;
 using Cake.Common.IO;
+using NuGet.Versioning;
+using NuGet.Protocol.Core.Types;
+using NuGet.Protocol;
+using NuGet.Common;
+using System.Threading.Tasks;
+using NuGet.Packaging.Core;
+using Cake.Core.Packaging;
+using System.Xml.Linq;
+using NuGet.Packaging;
 
 namespace Cake.ExtendedNuGet
 {
@@ -18,7 +27,7 @@ namespace Cake.ExtendedNuGet
     [CakeAliasCategory("NuGet")]
     public static class ExtendedNuGetAliases
     {
-        const string DefaultNuGetSource = "https://www.nuget.org/api/v2";
+        const string DefaultNuGetSource = "https://api.nuget.org/v3/index.json";
 
         /// <summary>
         /// Gets the Package Id from a .nupkg file
@@ -31,10 +40,9 @@ namespace Cake.ExtendedNuGet
         public static string GetNuGetPackageId (this ICakeContext context, FilePath file)
         {
             var f = file.MakeAbsolute (context.Environment).FullPath;
-
-            var p = new ZipPackage (f);
-
-            return p.Id;
+            var par = new NuGet.Packaging.PackageArchiveReader(System.IO.File.OpenRead(f));
+            var id = par.GetIdentity();
+            return id.Id;
         }
 
         /// <summary>
@@ -45,13 +53,12 @@ namespace Cake.ExtendedNuGet
         /// <param name="file">The .nupkg file to read.</param>
         [CakeMethodAlias]
         [CakeNamespaceImport("NuGet")]
-        public static SemanticVersion GetNuGetPackageVersion (this ICakeContext context, FilePath file)
+        public static NuGetVersion GetNuGetPackageVersion (this ICakeContext context, FilePath file)
         {
-            var f = file.MakeAbsolute (context.Environment).FullPath;
-
-            var p = new ZipPackage (f);
-
-            return p.Version;
+            var f = file.MakeAbsolute(context.Environment).FullPath;
+            var par = new NuGet.Packaging.PackageArchiveReader(System.IO.File.OpenRead(f));
+            var id = par.GetIdentity();
+            return id.Version;
         }
 
         /// <summary>
@@ -65,11 +72,11 @@ namespace Cake.ExtendedNuGet
         [CakeNamespaceImport("NuGet")]
         public static bool IsNuGetPublished (this ICakeContext context, FilePath file, string nugetSource = DefaultNuGetSource)
         {
-            var f = file.MakeAbsolute (context.Environment).FullPath;
+            var f = file.MakeAbsolute(context.Environment).FullPath;
+            var par = new NuGet.Packaging.PackageArchiveReader(System.IO.File.OpenRead(f));
+            var id = par.GetIdentity();
 
-            var pkg = new ZipPackage (f);
-
-            return IsNuGetPublished (context, pkg.Id, pkg.Version, nugetSource);
+            return IsNuGetPublished (context, id.Id, id.Version, nugetSource);
         }
 
         /// <summary>
@@ -84,7 +91,7 @@ namespace Cake.ExtendedNuGet
         [CakeNamespaceImport("NuGet")]
         public static bool IsNuGetPublished (this ICakeContext context, string packageId, string version, string nugetSource = DefaultNuGetSource)
         {
-            var v = SemanticVersion.Parse (version);
+            var v = NuGetVersion.Parse (version);
 
             return IsNuGetPublished (context, packageId, v, nugetSource);
         }
@@ -99,16 +106,30 @@ namespace Cake.ExtendedNuGet
         /// <param name="nugetSource">The NuGet package source.</param>
         [CakeMethodAlias]
         [CakeNamespaceImport("NuGet")]
-        public static bool IsNuGetPublished (this ICakeContext context, string packageId, SemanticVersion version, string nugetSource = DefaultNuGetSource)
+        public static bool IsNuGetPublished (this ICakeContext context, string packageId, NuGetVersion version, string nugetSource = DefaultNuGetSource)
         {
-            var repo = PackageRepositoryFactory.Default.CreateRepository (nugetSource);
+            var nuSource = Repository.Factory.GetCoreV3(nugetSource);
+            var nuCache = new SourceCacheContext();
+            var nuLogger = NullLogger.Instance;
 
-            var packages = repo.FindPackagesById (packageId);
+            var tcsPublished = new TaskCompletionSource<bool>();
 
-            //Filter the list of packages that are not Release (Stable) versions
-            var exists = packages.Any (p => p.Version == version);
+            Task.Run(async () =>
+            {
+                var pkgRes = await nuSource.GetResourceAsync<FindPackageByIdResource>();
 
-            return exists;
+                try
+                {
+                    var pkgInfo = await pkgRes.GetDependencyInfoAsync(packageId, new NuGetVersion(version.ToString()), nuCache, nuLogger, default);
+                    tcsPublished.TrySetResult(pkgInfo?.PackageIdentity?.Id?.Equals(packageId, StringComparison.OrdinalIgnoreCase) ?? false);
+                }
+                catch
+                {
+                    tcsPublished.TrySetResult(false);
+                }
+            });
+
+            return tcsPublished.Task.Result;
         }
 
 
@@ -204,7 +225,7 @@ namespace Cake.ExtendedNuGet
         /// A <see cref="IEnumerable{PackageReference}"/>.
         /// </returns>
         [CakeMethodAlias]
-        public static IEnumerable<PackageReference> GetPackageReferences(this ICakeContext context, DirectoryPath path)
+        public static IEnumerable<NuGet.Packaging.PackageReference> GetPackageReferences(this ICakeContext context, DirectoryPath path)
         {
             if (!path.IsRelative)
             {
@@ -217,8 +238,10 @@ namespace Cake.ExtendedNuGet
                 throw new CakeException(string.Format("Could not find a packages.config file in '{0}'", path.FullPath));
             }
 
-            var file = new PackageReferenceFile(packagePath.FullPath);
-            return file.GetPackageReferences();
+            var document = XDocument.Load(packagePath.FullPath);
+            var reader = new PackagesConfigReader(document);
+
+            return reader.GetPackages();
         }
 
         /// <summary>
@@ -237,7 +260,7 @@ namespace Cake.ExtendedNuGet
         /// A <see cref="IEnumerable{PackageReference}"/>.
         /// </returns>
         [CakeMethodAlias]
-        public static PackageReference GetPackageReference(this ICakeContext context, DirectoryPath path, string packageId)
+        public static NuGet.Packaging.PackageReference GetPackageReference(this ICakeContext context, DirectoryPath path, string packageId)
         {
             if (!path.IsRelative)
             {
@@ -250,8 +273,10 @@ namespace Cake.ExtendedNuGet
                 throw new CakeException(string.Format("Could not find a packages.config file in '{0}'", path.FullPath));
             }
 
-            var file = new PackageReferenceFile(packagePath.FullPath);
-            return file.GetPackageReferences().FirstOrDefault(x => x.Id.Equals(packageId, StringComparison.OrdinalIgnoreCase));
+            var document = XDocument.Load(packagePath.FullPath);
+            var reader = new PackagesConfigReader(document);
+
+            return reader.GetPackages().FirstOrDefault(x => x.PackageIdentity.Id.Equals(packageId, StringComparison.OrdinalIgnoreCase));
         }
     }
 }
