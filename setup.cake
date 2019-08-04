@@ -9,9 +9,12 @@ BuildParameters.SetParameters(context: Context,
                             repositoryOwner: "redth",
                             repositoryName: "Cake.ExtendedNuGet",
                             appVeyorAccountName: "redth",
+                            shouldRunCodecov: false,
                             shouldRunDotNetCorePack: true,
                             shouldRunDupFinder: false,
-                            shouldRunInspectCode: false);
+                            shouldRunInspectCode: false,
+                            shouldRunIntegrationTests: false,
+                            testFilePattern: "DO_NOT_RUN_TESTS");
 
 BuildParameters.PrintParameters(Context);
 
