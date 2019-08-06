@@ -4,7 +4,7 @@ Environment.SetVariableNames();
 
 BuildParameters.SetParameters(context: Context,
                             buildSystem: BuildSystem,
-                            sourceDirectoryPath: "./",
+                            sourceDirectoryPath: "./source/",
                             title: "Cake.ExtendedNuGet",
                             repositoryOwner: "redth",
                             repositoryName: "Cake.ExtendedNuGet",
