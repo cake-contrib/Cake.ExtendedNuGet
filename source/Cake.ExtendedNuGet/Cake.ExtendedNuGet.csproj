@@ -18,7 +18,6 @@
     <RepositoryUrl>https://github.com/cake-contrib/Cake.ExtendedNuGet.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</PackageIconUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/Redth/Cake.ExtendedNuGet/master/LICENSE.md</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>
