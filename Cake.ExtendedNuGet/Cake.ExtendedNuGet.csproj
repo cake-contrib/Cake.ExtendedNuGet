@@ -14,19 +14,15 @@
     <Authors>Redth</Authors>
     <Owners>Redth</Owners>
     <PackageProjectUrl>https://github.com/redth/Cake.ExtendedNuGet</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/Redth/Cake.ExtendedNuGet/master/icon.png</PackageIconUrl>
+    <PackageIconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</PackageIconUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/Redth/Cake.ExtendedNuGet/master/LICENSE.md</PackageLicenseUrl>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
-  </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Cake.Common" Version="0.33.0" />
-    <PackageReference Include="Cake.Core" Version="0.33.0" />
-    <PackageReference Include="NuGet.Packaging" Version="5.0.2" />
-    <PackageReference Include="NuGet.Protocol" Version="5.0.2" />
+    <PackageReference Include="Cake.Common" Version="0.33.0" PrivateAssets="All" />
+    <PackageReference Include="Cake.Core" Version="0.33.0" PrivateAssets="All" />
+    <PackageReference Include="NuGet.Packaging" Version="5.0.2" PrivateAssets="All" />
+    <PackageReference Include="NuGet.Protocol" Version="5.0.2" PrivateAssets="All" />
   </ItemGroup>
  
 </Project>
