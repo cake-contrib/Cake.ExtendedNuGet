@@ -14,7 +14,8 @@ BuildParameters.SetParameters(context: Context,
                             shouldRunDupFinder: false,
                             shouldRunInspectCode: false,
                             shouldRunIntegrationTests: false,
-                            testFilePattern: "DO_NOT_RUN_TESTS");
+                            testFilePattern: "DO_NOT_RUN_TESTS",
+                            shouldRunGitVersion: true);
 
 BuildParameters.PrintParameters(Context);
 
