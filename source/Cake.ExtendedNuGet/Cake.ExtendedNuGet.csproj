@@ -12,8 +12,8 @@
     <Summary>Cake build aliases for NuGet package inspection.</Summary>
     <PackageTags>Cake Script Build</PackageTags>
     <Authors>Redth</Authors>
-    <Owners>Redth</Owners>
-    <PackageProjectUrl>https://github.com/redth/Cake.ExtendedNuGet</PackageProjectUrl>
+    <Owners>Redth, cake-contrib</Owners>
+    <PackageProjectUrl>https://github.com/cake-contrib/Cake.ExtendedNuGet</PackageProjectUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/cake-contrib/Cake.ExtendedNuGet.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
