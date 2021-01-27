@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cake.Common" Version="0.33.0" />
-    <PackageReference Include="Cake.Core" Version="0.33.0" />
-    <PackageReference Include="Cake.Testing" Version="0.33.0" />
-    <PackageReference Include="NuGet.Packaging" Version="5.0.2" PrivateAssets="All" />
-    <PackageReference Include="NuGet.Protocol" Version="5.0.2" PrivateAssets="All" />
+    <PackageReference Include="Cake.Common" Version="0.36.0" />
+    <PackageReference Include="Cake.Core" Version="0.36.0" />
+    <PackageReference Include="Cake.Testing" Version="0.36.0" />
+    <PackageReference Include="NuGet.Packaging" Version="5.4.0" PrivateAssets="All" />
+    <PackageReference Include="NuGet.Protocol" Version="5.4.0" PrivateAssets="All" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
       <PrivateAssets>all</PrivateAssets>
