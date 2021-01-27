@@ -6,9 +6,10 @@ tools/
 nupkg/
 *.userprefs
 *.suo
+*.user
 .nugetapikey
 xtc-api-key
 xtc-email
 .idea
 .vs/
-/source/Cake.ExtendedNuGet.sln.DotSettings.user
+BuildArtifacts/
