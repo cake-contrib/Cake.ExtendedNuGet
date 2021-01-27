@@ -25,7 +25,7 @@ namespace Cake.ExtendedNuGet.Tests.Fakes
             var registry = new WindowsRegistry ();
             var toolRepo = new ToolRepository(environment);
             var config = new Core.Configuration.CakeConfigurationProvider(fileSystem, environment).CreateConfiguration(testsDir, new Dictionary<string, string>());
-            var toolResolutionStrategy = new ToolResolutionStrategy(fileSystem, environment, globber, config, log);
+            var toolResolutionStrategy = new ToolResolutionStrategy(fileSystem, environment, globber, config);
             var toolLocator = new ToolLocator(environment, toolRepo, toolResolutionStrategy);
             var processRunner = new ProcessRunner(fileSystem, environment, log, toolLocator, config);
             var dataService = new FakeCakeDataService();
