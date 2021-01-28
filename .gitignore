@@ -6,8 +6,10 @@ tools/
 nupkg/
 *.userprefs
 *.suo
+*.user
 .nugetapikey
 xtc-api-key
 xtc-email
 .idea
 .vs/
+BuildArtifacts/
