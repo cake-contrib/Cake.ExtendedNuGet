@@ -39,8 +39,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cake.Common" Version="0.36.0" PrivateAssets="All" />
-    <PackageReference Include="Cake.Core" Version="0.36.0" PrivateAssets="All" />
+    <PackageReference Include="Cake.Common" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Cake.Core" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="CakeContrib.Guidelines" Version="0.5.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
