@@ -9,6 +9,8 @@ updates:
       - dependency-name: "Cake.Core"
       - dependency-name: "Cake.Common"
       - dependency-name: "Cake.Testing"
+      - dependency-name: "NuGet.Protocol"
+      - dependency-name: "NuGet.Packaging"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
