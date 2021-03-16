@@ -23,7 +23,7 @@
     <Title>Cake.ExtendedNuGet</Title>
     <Description>Cake Build addon to provide Aliases for NuGet package inspection.</Description>
     <Summary>Cake build aliases for NuGet package inspection.</Summary>
-    <PackageTags>Cake Script Build</PackageTags>
+    <PackageTags>cake;script;build;cake-build;addin;cake-contrib;cake-addin;nuget</PackageTags>
     <Authors>Redth</Authors>
     <Owners>Redth, cake-contrib</Owners>
     <PackageProjectUrl>https://github.com/cake-contrib/Cake.ExtendedNuGet</PackageProjectUrl>
