@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -11,9 +11,9 @@
     <!-- 
       The target of this addin is NuGet.Packaging/NuGet.Core.
       Since "they" double-target netstandard2.0 and net471
-      the guideline to double-target cake addins to netstandard2.0 and
-      net461 (see https://cake-contrib.github.io/CakeContrib.Guidelines/rules/ccg0007)
-      can be reduced to netstandard2.0.
+      the guideline to target cake addins to net461 
+      (see https://cake-contrib.github.io/CakeContrib.Guidelines/rules/ccg0007)
+      can be ignored.
      -->
     <CakeContribGuidelinesOmitTargetFramework Include="net461" />
   </ItemGroup>
@@ -30,8 +30,6 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/cake-contrib/Cake.ExtendedNuGet.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageIcon>$(CakeContribGuidelinesIconDestinationLocation)</PackageIcon>
-    <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,7 +39,7 @@
     </PackageReference>
     <PackageReference Include="Cake.Common" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="Cake.Core" Version="1.0.0" PrivateAssets="All" />
-    <PackageReference Include="CakeContrib.Guidelines" Version="0.5.0">
+    <PackageReference Include="CakeContrib.Guidelines" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
