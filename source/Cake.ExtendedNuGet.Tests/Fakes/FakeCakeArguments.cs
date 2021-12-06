@@ -32,5 +32,7 @@ namespace Cake.ExtendedNuGet.Tests.Fakes
         {
             return _arguments.TryGetValue(name, out var val) ? val : new List<string>();
         }
+        
+        public IDictionary<string, ICollection<string>> GetArguments() => _arguments;
     }
 }
