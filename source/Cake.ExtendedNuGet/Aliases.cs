@@ -40,7 +40,8 @@ namespace Cake.ExtendedNuGet
         public static string GetNuGetPackageId (this ICakeContext context, FilePath file)
         {
             var f = file.MakeAbsolute (context.Environment).FullPath;
-            var par = new NuGet.Packaging.PackageArchiveReader(System.IO.File.OpenRead(f));
+            using var stream = System.IO.File.OpenRead(f);
+            using var par = new PackageArchiveReader(f);
             var id = par.GetIdentity();
             return id.Id;
         }
@@ -56,7 +57,8 @@ namespace Cake.ExtendedNuGet
         public static NuGetVersion GetNuGetPackageVersion (this ICakeContext context, FilePath file)
         {
             var f = file.MakeAbsolute(context.Environment).FullPath;
-            var par = new NuGet.Packaging.PackageArchiveReader(System.IO.File.OpenRead(f));
+            using var stream = System.IO.File.OpenRead(f);
+            using var par = new PackageArchiveReader(stream);
             var id = par.GetIdentity();
             return id.Version;
         }
@@ -73,7 +75,8 @@ namespace Cake.ExtendedNuGet
         public static bool IsNuGetPublished (this ICakeContext context, FilePath file, string nugetSource = DefaultNuGetSource)
         {
             var f = file.MakeAbsolute(context.Environment).FullPath;
-            var par = new NuGet.Packaging.PackageArchiveReader(System.IO.File.OpenRead(f));
+            using var stream = System.IO.File.OpenRead(f);
+            using var par = new PackageArchiveReader(stream);
             var id = par.GetIdentity();
 
             return IsNuGetPublished (context, id.Id, id.Version, nugetSource);
