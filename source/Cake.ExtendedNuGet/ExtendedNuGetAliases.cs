@@ -1,45 +1,42 @@
 ﻿using System;
-using Cake.Core.Annotations;
-using Cake.Core;
-using Cake.Core.IO;
 using System.Collections.Generic;
 using System.Linq;
-
-using Cake.Common.Tools.NuGet.Push;
-using Cake.Common.Tools.NuGet;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 using Cake.Common.Diagnostics;
 using Cake.Common.IO;
-using NuGet.Versioning;
-using NuGet.Protocol.Core.Types;
-using NuGet.Protocol;
+using Cake.Common.Tools.NuGet;
+using Cake.Common.Tools.NuGet.Push;
+using Cake.Core;
+using Cake.Core.Annotations;
+using Cake.Core.IO;
 using NuGet.Common;
-using System.Threading.Tasks;
-using NuGet.Packaging.Core;
-using Cake.Core.Packaging;
-using System.Xml.Linq;
 using NuGet.Packaging;
+using NuGet.Protocol;
+using NuGet.Protocol.Core.Types;
+using NuGet.Versioning;
 
 namespace Cake.ExtendedNuGet
 {
     /// <summary>
-    /// Extended NuGet Aliases
+    /// Extended NuGet Aliases.
     /// </summary>
     [CakeAliasCategory("NuGet")]
     public static class ExtendedNuGetAliases
     {
-        const string DefaultNuGetSource = "https://api.nuget.org/v3/index.json";
+        private const string DefaultNuGetSource = "https://api.nuget.org/v3/index.json";
 
         /// <summary>
-        /// Gets the Package Id from a .nupkg file
+        /// Gets the Package Id from a .nupkg file.
         /// </summary>
         /// <returns>The package Id.</returns>
         /// <param name="context">The context.</param>
         /// <param name="file">The .nupkg file to read.</param>
         [CakeMethodAlias]
         [CakeNamespaceImport("NuGet")]
-        public static string GetNuGetPackageId (this ICakeContext context, FilePath file)
+        public static string GetNuGetPackageId(this ICakeContext context, FilePath file)
         {
-            var f = file.MakeAbsolute (context.Environment).FullPath;
+            var f = file.MakeAbsolute(context.Environment).FullPath;
             using var stream = System.IO.File.OpenRead(f);
             using var par = new PackageArchiveReader(f);
             var id = par.GetIdentity();
@@ -47,14 +44,14 @@ namespace Cake.ExtendedNuGet
         }
 
         /// <summary>
-        /// Gets the Package Version from a .nupkg file
+        /// Gets the Package Version from a .nupkg file.
         /// </summary>
         /// <returns>The package version.</returns>
         /// <param name="context">The context.</param>
         /// <param name="file">The .nupkg file to read.</param>
         [CakeMethodAlias]
         [CakeNamespaceImport("NuGet")]
-        public static NuGetVersion GetNuGetPackageVersion (this ICakeContext context, FilePath file)
+        public static NuGetVersion GetNuGetPackageVersion(this ICakeContext context, FilePath file)
         {
             var f = file.MakeAbsolute(context.Environment).FullPath;
             using var stream = System.IO.File.OpenRead(f);
@@ -72,14 +69,14 @@ namespace Cake.ExtendedNuGet
         /// <param name="nugetSource">The NuGet package source.</param>
         [CakeMethodAlias]
         [CakeNamespaceImport("NuGet")]
-        public static bool IsNuGetPublished (this ICakeContext context, FilePath file, string nugetSource = DefaultNuGetSource)
+        public static bool IsNuGetPublished(this ICakeContext context, FilePath file, string nugetSource = DefaultNuGetSource)
         {
             var f = file.MakeAbsolute(context.Environment).FullPath;
             using var stream = System.IO.File.OpenRead(f);
             using var par = new PackageArchiveReader(stream);
             var id = par.GetIdentity();
 
-            return IsNuGetPublished (context, id.Id, id.Version, nugetSource);
+            return IsNuGetPublished(context, id.Id, id.Version, nugetSource);
         }
 
         /// <summary>
@@ -92,11 +89,11 @@ namespace Cake.ExtendedNuGet
         /// <param name="nugetSource">The NuGet package source.</param>
         [CakeMethodAlias]
         [CakeNamespaceImport("NuGet")]
-        public static bool IsNuGetPublished (this ICakeContext context, string packageId, string version, string nugetSource = DefaultNuGetSource)
+        public static bool IsNuGetPublished(this ICakeContext context, string packageId, string version, string nugetSource = DefaultNuGetSource)
         {
-            var v = NuGetVersion.Parse (version);
+            var v = NuGetVersion.Parse(version);
 
-            return IsNuGetPublished (context, packageId, v, nugetSource);
+            return IsNuGetPublished(context, packageId, v, nugetSource);
         }
 
         /// <summary>
@@ -109,16 +106,15 @@ namespace Cake.ExtendedNuGet
         /// <param name="nugetSource">The NuGet package source.</param>
         [CakeMethodAlias]
         [CakeNamespaceImport("NuGet")]
-        public static bool IsNuGetPublished (this ICakeContext context, string packageId, NuGetVersion version, string nugetSource = DefaultNuGetSource)
+        public static bool IsNuGetPublished(this ICakeContext context, string packageId, NuGetVersion version, string nugetSource = DefaultNuGetSource)
         {
-            var nuSource = Repository.Factory.GetCoreV3(nugetSource);
-            var nuCache = new SourceCacheContext();
-            var nuLogger = NullLogger.Instance;
-
             var tcsPublished = new TaskCompletionSource<bool>();
 
             Task.Run(async () =>
             {
+                var nuSource = Repository.Factory.GetCoreV3(nugetSource);
+                using var nuCache = new SourceCacheContext();
+                var nuLogger = NullLogger.Instance;
                 var pkgRes = await nuSource.GetResourceAsync<FindPackageByIdResource>();
 
                 try
@@ -135,10 +131,8 @@ namespace Cake.ExtendedNuGet
             return tcsPublished.Task.Result;
         }
 
-
-
         /// <summary>
-        /// Looks for and attempts to publish NuGet packages matching the globbing patterns
+        /// Looks for and attempts to publish NuGet packages matching the globbing patterns.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="nugetSource">The NuGet Server.</param>
@@ -146,13 +140,13 @@ namespace Cake.ExtendedNuGet
         /// <param name="settings">The settings.</param>
         /// <param name="nupkgFileGlobbingPatterns">The file globbing patterns to find NuGet packages with.</param>
         [CakeMethodAlias]
-        public static void PublishNuGets (this ICakeContext context, string nugetSource, string apiKey, PublishNuGetsSettings settings, params string [] nupkgFileGlobbingPatterns)
+        public static void PublishNuGets(this ICakeContext context, string nugetSource, string apiKey, PublishNuGetsSettings settings, params string[] nupkgFileGlobbingPatterns)
         {
-            PublishNuGets (context, nugetSource, nugetSource, apiKey, settings, nupkgFileGlobbingPatterns);
+            PublishNuGets(context, nugetSource, nugetSource, apiKey, settings, nupkgFileGlobbingPatterns);
         }
 
         /// <summary>
-        /// Looks for and attempts to publish NuGet packages matching the globbing patterns
+        /// Looks for and attempts to publish NuGet packages matching the globbing patterns.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="readSource">The NuGet Server to check for existing packages on.</param>
@@ -161,18 +155,22 @@ namespace Cake.ExtendedNuGet
         /// <param name="settings">The settings.</param>
         /// <param name="nupkgFileGlobbingPatterns">The file globbing patterns to find NuGet packages with.</param>
         [CakeMethodAlias]
-        public static void PublishNuGets (this ICakeContext context, string readSource, string publishSource, string apiKey, PublishNuGetsSettings settings, params string[] nupkgFileGlobbingPatterns)
+        public static void PublishNuGets(this ICakeContext context, string readSource, string publishSource, string apiKey, PublishNuGetsSettings settings, params string[] nupkgFileGlobbingPatterns)
         {
             foreach (var pattern in nupkgFileGlobbingPatterns)
             {
                 var files = context.GetFiles(pattern);
                 if (files == null || !files.Any())
+                {
                     continue;
+                }
 
                 foreach (var file in files)
                 {
-                    if (!settings.ForcePush 
-                        && !string.IsNullOrEmpty (readSource) ? IsNuGetPublished (context, file, readSource) : IsNuGetPublished (context, file))
+                    if (!settings.ForcePush
+                        && !string.IsNullOrEmpty(readSource)
+                            ? IsNuGetPublished(context, file, readSource)
+                            : IsNuGetPublished(context, file))
                     {
                         context.Information("Already published: {0}", file);
                         continue;
@@ -187,18 +185,24 @@ namespace Cake.ExtendedNuGet
                     {
                         attempts++;
 
-                        try {
-                            var ns = new NuGetPushSettings {
-                                ApiKey = apiKey
+                        try
+                        {
+                            var ns = new NuGetPushSettings
+                            {
+                                ApiKey = apiKey,
                             };
 
-                            if (!string.IsNullOrEmpty (publishSource))
+                            if (!string.IsNullOrEmpty(publishSource))
+                            {
                                 ns.Source = publishSource;
-                            
-                            context.NuGetPush (file, ns);
+                            }
+
+                            context.NuGetPush(file, ns);
                             success = true;
                             break;
-                        } catch {
+                        }
+                        catch
+                        {
                             context.Warning("Attempt #{0} of {1} failed...", attempts, settings.MaxAttempts);
                         }
                     }
@@ -207,7 +211,7 @@ namespace Cake.ExtendedNuGet
                     {
                         var msg = "Maximum # of attempts ({0}) to publish exceeded";
                         context.Error(msg, settings.MaxAttempts);
-                        throw new Exception(string.Format (msg, settings.MaxAttempts));
+                        throw new Exception(string.Format(msg, settings.MaxAttempts));
                     }
 
                     context.Information("Published Package successfully: {0}", file);
@@ -228,7 +232,7 @@ namespace Cake.ExtendedNuGet
         /// A <see cref="IEnumerable{PackageReference}"/>.
         /// </returns>
         [CakeMethodAlias]
-        public static IEnumerable<NuGet.Packaging.PackageReference> GetPackageReferences(this ICakeContext context, DirectoryPath path)
+        public static IEnumerable<PackageReference> GetPackageReferences(this ICakeContext context, DirectoryPath path)
         {
             if (!path.IsRelative)
             {
@@ -238,7 +242,7 @@ namespace Cake.ExtendedNuGet
             var packagePath = path.CombineWithFilePath(new FilePath("packages.config"));
             if (!System.IO.File.Exists(packagePath.FullPath))
             {
-                throw new CakeException(string.Format("Could not find a packages.config file in '{0}'", path.FullPath));
+                throw new CakeException($"Could not find a packages.config file in '{path.FullPath}'");
             }
 
             var document = XDocument.Load(packagePath.FullPath);
@@ -263,7 +267,7 @@ namespace Cake.ExtendedNuGet
         /// A <see cref="IEnumerable{PackageReference}"/>.
         /// </returns>
         [CakeMethodAlias]
-        public static NuGet.Packaging.PackageReference GetPackageReference(this ICakeContext context, DirectoryPath path, string packageId)
+        public static PackageReference GetPackageReference(this ICakeContext context, DirectoryPath path, string packageId)
         {
             if (!path.IsRelative)
             {
@@ -273,7 +277,7 @@ namespace Cake.ExtendedNuGet
             var packagePath = path.CombineWithFilePath(new FilePath("packages.config"));
             if (!System.IO.File.Exists(packagePath.FullPath))
             {
-                throw new CakeException(string.Format("Could not find a packages.config file in '{0}'", path.FullPath));
+                throw new CakeException($"Could not find a packages.config file in '{path.FullPath}'");
             }
 
             var document = XDocument.Load(packagePath.FullPath);
