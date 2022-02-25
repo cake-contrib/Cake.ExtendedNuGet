@@ -28,7 +28,7 @@ jobs:
       - name: Fetch all tags and branches
         run: git fetch --prune --unshallow
 
-      - uses: actions/setup-dotnet@v1.9.1
+      - uses: actions/setup-dotnet@v2
         with:
           # codecov and unittests need 2.1, gitversion needs 5.0 and need .NET 6 to build
           dotnet-version: |
