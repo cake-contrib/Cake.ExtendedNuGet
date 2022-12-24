@@ -48,7 +48,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="NuGet.Packaging" Version="5.4.0" PrivateAssets="All" />
-    <PackageReference Include="NuGet.Protocol" Version="5.4.0" PrivateAssets="All" />
+    <PackageReference Include="NuGet.Protocol" Version="5.9.3" PrivateAssets="All" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
