@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <None Include="../../README.md" Link="README.md" Pack="true" PackagePath="" />
+    <None Include="$(SolutionDir)/.editorconfig" Link=".editorconfig" />
+    <AdditionalFiles Include="$(SolutionDir)/stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -37,12 +39,20 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="IDisposableAnalyzers" Version="4.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="NuGet.Packaging" Version="5.4.0" PrivateAssets="All" />
     <PackageReference Include="NuGet.Protocol" Version="5.4.0" PrivateAssets="All" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
-
+  
 </Project>
