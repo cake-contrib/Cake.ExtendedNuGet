@@ -70,6 +70,18 @@ namespace Cake.ExtendedNuGet.Tests
         }
 
         [Fact]
+        public void IsNugetPublishedInvalidSourceShouldBeFalse ()
+        {
+            var p = context.CakeContext.IsNuGetPublished (
+                "Xamarin.Android.Support.v4",
+                "23.1.1.0",
+                "https://api.nuget.org/v3/wrong.json"
+            );
+
+            Assert.False (p);
+        }
+
+        [Fact]
         public void NuGetPackageIdFromFile ()
         {
             var f = new FilePath ("./TestData/xamarin.android.support.v4.23.1.1.nupkg");
