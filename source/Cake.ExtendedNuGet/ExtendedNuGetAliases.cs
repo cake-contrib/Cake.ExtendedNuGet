@@ -16,6 +16,9 @@ using NuGet.Protocol;
 using NuGet.Protocol.Core.Types;
 using NuGet.Versioning;
 
+using LogLevel = Cake.Core.Diagnostics.LogLevel;
+using Verbosity = Cake.Core.Diagnostics.Verbosity;
+
 namespace Cake.ExtendedNuGet
 {
     /// <summary>
@@ -112,18 +115,21 @@ namespace Cake.ExtendedNuGet
 
             Task.Run(async () =>
             {
-                var nuSource = Repository.Factory.GetCoreV3(nugetSource);
-                using var nuCache = new SourceCacheContext();
-                var nuLogger = NullLogger.Instance;
-                var pkgRes = await nuSource.GetResourceAsync<FindPackageByIdResource>();
-
                 try
                 {
+                    var nuSource = Repository.Factory.GetCoreV3(nugetSource);
+                    using var nuCache = new SourceCacheContext();
+                    var nuLogger = NullLogger.Instance;
+
+                    var pkgRes = await nuSource.GetResourceAsync<FindPackageByIdResource>();
                     var pkgInfo = await pkgRes.GetDependencyInfoAsync(packageId, new NuGetVersion(version.ToString()), nuCache, nuLogger, default);
                     tcsPublished.TrySetResult(pkgInfo?.PackageIdentity?.Id?.Equals(packageId, StringComparison.OrdinalIgnoreCase) ?? false);
                 }
-                catch
+                catch(Exception ex)
                 {
+                    context.Log.Write(Verbosity.Diagnostic, LogLevel.Error,
+                        $"Failed to read nuget source repository information: {ex.Message}");
+
                     tcsPublished.TrySetResult(false);
                 }
             });
