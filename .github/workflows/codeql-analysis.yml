@@ -11,7 +11,7 @@ on:
 jobs:
   analyze:
     name: Analyze
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
 
     strategy:
       fail-fast: false
@@ -49,8 +49,7 @@ jobs:
       with:
         script-path: recipe.cake
         target: DotNetCore-Build
-        cake-version: 0.38.5
-        cake-bootstrap: true
+        cake-version: tool-manifest
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
