@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cake.Common" Version="2.0.0" />
-    <PackageReference Include="Cake.Core" Version="2.0.0" />
-    <PackageReference Include="Cake.Testing" Version="2.0.0" />
+    <PackageReference Include="Cake.Common" Version="3.0.0" />
+    <PackageReference Include="Cake.Core" Version="3.0.0" />
+    <PackageReference Include="Cake.Testing" Version="3.0.0" />
     <PackageReference Include="coverlet.msbuild" Version="6.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -16,8 +16,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="NuGet.Packaging" Version="5.4.0" PrivateAssets="All" />
-    <PackageReference Include="NuGet.Protocol" Version="5.4.0" PrivateAssets="All" />
+    <PackageReference Include="NuGet.Packaging" Version="6.3.1" PrivateAssets="All" />
+    <PackageReference Include="NuGet.Protocol" Version="6.3.1" PrivateAssets="All" />
     <PackageReference Include="xunit" Version="2.5.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3">
       <PrivateAssets>all</PrivateAssets>
