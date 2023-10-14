@@ -8,11 +8,12 @@ BuildParameters.SetParameters(context: Context,
                             title: "Cake.ExtendedNuGet",
                             repositoryOwner: "cake-contrib",
                             repositoryName: "Cake.ExtendedNuGet",
-                            appVeyorAccountName: "cakecontrib",
                             shouldRunDotNetCorePack: true,
                             shouldRunInspectCode: false,
                             shouldRunIntegrationTests: false,
-                            testFilePattern: "DO_NOT_RUN_TESTS");
+                            testFilePattern: "DO_NOT_RUN_TESTS",
+                            preferredBuildProviderType: BuildProviderType.GitHubActions,
+                            preferredBuildAgentOperatingSystem: PlatformFamily.Linux);
 
 BuildParameters.PrintParameters(Context);
 
