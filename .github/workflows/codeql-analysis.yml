@@ -33,6 +33,7 @@ jobs:
           5.0.402
           6.0.100
           7.0.402
+          8.0.100
 
     - name: Cache Tools
       uses: actions/cache@v3
