@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -33,9 +33,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Cake.Common" Version="3.0.0" PrivateAssets="All" />
-    <PackageReference Include="Cake.Core" Version="3.0.0" PrivateAssets="All" />
-    <PackageReference Include="CakeContrib.Guidelines" Version="1.4.0">
+    <PackageReference Include="Cake.Common" Version="4.0.0" PrivateAssets="All" />
+    <PackageReference Include="Cake.Core" Version="4.0.0" PrivateAssets="All" />
+    <PackageReference Include="CakeContrib.Guidelines" Version="1.5.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -47,8 +47,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="NuGet.Packaging" Version="6.3.1" PrivateAssets="All" />
-    <PackageReference Include="NuGet.Protocol" Version="6.3.1" PrivateAssets="All" />
+    <PackageReference Include="NuGet.Packaging" Version="6.7.0" PrivateAssets="All" />
+    <PackageReference Include="NuGet.Protocol" Version="6.7.0" PrivateAssets="All" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
