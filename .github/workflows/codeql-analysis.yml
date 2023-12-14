@@ -11,7 +11,7 @@ on:
 jobs:
   analyze:
     name: Analyze
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
 
     strategy:
       fail-fast: false
@@ -20,11 +20,11 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2.4.0
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
-    - uses: actions/setup-dotnet@v1.9.0
+    - uses: actions/setup-dotnet@v4
       with:
         # codecov and unittests need 2.1, gitversion needs 5.0 and need .NET 6 to build
         dotnet-version: |
@@ -32,25 +32,26 @@ jobs:
           3.1.414
           5.0.402
           6.0.100
+          7.0.402
+          8.0.100
 
     - name: Cache Tools
-      uses: actions/cache@v2.1.7
+      uses: actions/cache@v3
       with:
         path: tools
         key: ${{ runner.os }}-tools-${{ hashFiles('recipe.cake') }}
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+      uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
 
     - name: Build project
-      uses: cake-build/cake-action@v1.4.0
+      uses: cake-build/cake-action@v1.4.1
       with:
         script-path: recipe.cake
         target: DotNetCore-Build
-        cake-version: 0.38.5
-        cake-bootstrap: true
+        cake-version: tool-manifest
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      uses: github/codeql-action/analyze@v2
