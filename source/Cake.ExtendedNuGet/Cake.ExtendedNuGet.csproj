@@ -47,7 +47,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="NuGet.Packaging" Version="6.7.0" PrivateAssets="All" />
+    <PackageReference Include="NuGet.Packaging" Version="6.8.1" PrivateAssets="All" />
     <PackageReference Include="NuGet.Protocol" Version="6.7.0" PrivateAssets="All" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
